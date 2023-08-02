@@ -22,7 +22,7 @@ Route::post('login',function (Request $request){
 
 Route::get('/user', function (Request $request) {
 
-
+    dd($request->user('api'));
     dd(auth('api')->check());
 //    dd($request->user('api'));
 

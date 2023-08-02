@@ -12,8 +12,9 @@ use Laravel\Sanctum\PersonalAccessToken as SanctumPersonalAccessToken;
 
 class PersonalAccessToken extends SanctumPersonalAccessToken
 {
-    use UsesUuid, Token;
+    use Token;
 
+    protected $connection  = 'main';
     /**
      * The attributes that are mass assignable.
      *
@@ -51,17 +52,7 @@ class PersonalAccessToken extends SanctumPersonalAccessToken
     // find token with cache
     public static function findToken($token)
     {
-
-        return parent::findToken($token)??null;
-//        $token = Cache::remember(RedisKey::generateKeyFormat(RedisKey::KEYS_FORMAT_SANCTUM_TOKEN, ['md5Token' => static::tokenRedisHashKey($token)]), 600, function () use ($token) {
-//            return parent::findToken($token) ?? '_null_';
-//        });
-
-        if ($token === '_null_' || static::tokenName() !== $token->name) {
-            return null;
-        }
-
-        return $token;
+        return parent::findToken($token);
     }
 
     // tokenable with cache
